@@ -8,17 +8,27 @@ random_float() {
     echo "scale=1; $min + $RANDOM/32768 * $range" | bc
 }
 
-# Current timestamp in seconds
+# Get current hour and round down to nearest 3-hour mark
+current_hour=$(date +%H)
+last_3hour_mark=$((current_hour - current_hour % 3))
+
+# Get current date and time in seconds
 current_ts=$(date +%s)
+current_day_start=$(date -d "@$current_ts" +%Y-%m-%d)
+current_day_start_ts=$(date -d "$current_day_start" +%s)
 
 # Loop through last 10 days
 for day in {9..0}; do
-    # Convert to day start (00:00:00)
-    day_start=$(date -d "@$current_ts" +%Y-%m-%d)
-    day_start_ts=$(date -d "$day_start -$day days" +%s)
+    # Get start of each day
+    day_start_ts=$(date -d "$current_day_start -$day days" +%s)
     
-    # For each day, create 8 samples (every 3 hours)
+    # For each day, create samples at fixed hours (0,3,6,9,12,15,18,21)
     for hour in {0..21..3}; do
+        # Skip future timestamps
+        if [ $day -eq 0 ] && [ $hour -gt $last_3hour_mark ]; then
+            continue
+        fi
+        
         # Calculate timestamp
         sample_ts=$(date -d "@$((day_start_ts + hour * 3600))" -u +"%Y-%m-%dT%H:%M:%S.000Z")
         

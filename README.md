@@ -178,6 +178,33 @@ Mỗi test case đều kiểm tra:
 - Logic nghiệp vụ (ví dụ: timestamp trong khoảng 1 tuần)
 - Phân trang hoạt động đúng
 
+## Tạo dữ liệu mẫu
+Dự án có kèm script tạo dữ liệu mẫu tự động cho mục đích test:
+
+```bash
+# Thêm quyền thực thi cho script
+chmod +x create_sample_data.sh
+
+# Chạy script tạo dữ liệu
+./create_sample_data.sh
+```
+
+Script sẽ tạo:
+- Dữ liệu trong 10 ngày gần nhất
+- Mỗi ngày 8 mẫu (cách nhau 3 tiếng, từ 00:00 đến 21:00)
+- Mỗi thời điểm bao gồm:
+  - Dữ liệu không khí:
+    + Nhiệt độ: 20-30°C
+    + Độ ẩm: 60-80%
+    + Áp suất: 1010-1015 hPa
+  - Dữ liệu độ ẩm đất cho 2 vị trí:
+    + Cây cam số 1: 35-45%
+    + Cây cam số 2: 40-50%
+
+Tổng số mẫu được tạo:
+- 80 mẫu dữ liệu không khí (10 ngày × 8 mẫu/ngày)
+- 160 mẫu dữ liệu độ ẩm đất (10 ngày × 8 mẫu/ngày × 2 vị trí)
+
 ## Lưu ý
 - Database SQLite sẽ tự động được tạo khi khởi động ứng dụng lần đầu
 - File database được lưu tại `./test.db`
