@@ -179,6 +179,8 @@ Mỗi test case đều kiểm tra:
 - Phân trang hoạt động đúng
 
 ## Lưu ý
+- Database SQLite sẽ tự động được tạo khi khởi động ứng dụng lần đầu
+- File database được lưu tại `./test.db`
 - Timestamp sử dụng định dạng ISO 8601
 - Các giá trị đo đều là số thực (float)
 - API docs có sẵn tại: http://localhost:8000/docs

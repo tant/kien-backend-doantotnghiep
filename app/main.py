@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from app.routers import air, soil
 from app.mqtt.client import start_mqtt_client
+from app.database import Base, engine
+
+# Tạo các bảng trong database
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
