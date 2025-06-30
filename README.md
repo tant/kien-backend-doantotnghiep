@@ -151,6 +151,33 @@ Format message MQTT:
 }
 ```
 
+## Testing
+Để chạy các test:
+```bash
+pytest
+```
+
+Các test case bao gồm:
+### Air Data Tests
+- Tạo mẫu dữ liệu không khí (tự động timestamp)
+- Tạo mẫu dữ liệu không khí với timestamp tùy chọn
+- Lấy danh sách dữ liệu không khí
+- Kiểm tra phân trang
+- Lấy dữ liệu trong 1 tuần gần nhất
+
+### Soil Data Tests
+- Tạo mẫu dữ liệu độ ẩm đất (tự động timestamp)
+- Tạo mẫu dữ liệu độ ẩm đất với timestamp tùy chọn
+- Lấy danh sách dữ liệu độ ẩm đất
+- Kiểm tra phân trang
+- Lấy dữ liệu của một vị trí trong 1 tuần gần nhất
+
+Mỗi test case đều kiểm tra:
+- Status code của response
+- Cấu trúc và kiểu dữ liệu của response
+- Logic nghiệp vụ (ví dụ: timestamp trong khoảng 1 tuần)
+- Phân trang hoạt động đúng
+
 ## Lưu ý
 - Timestamp sử dụng định dạng ISO 8601
 - Các giá trị đo đều là số thực (float)
