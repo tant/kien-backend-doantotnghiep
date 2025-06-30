@@ -10,6 +10,9 @@ class AirSampleBase(BaseModel):
 class AirSampleCreate(AirSampleBase):
     pass
 
+class AirSampleCreateWithTimestamp(AirSampleBase):
+    timestamp: datetime
+
 class AirSample(AirSampleBase):
     id: int
     timestamp: datetime
@@ -22,6 +25,9 @@ class SoilSampleBase(BaseModel):
 
 class SoilSampleCreate(SoilSampleBase):
     pass
+
+class SoilSampleCreateWithTimestamp(SoilSampleBase):
+    timestamp: datetime
 
 class SoilSample(SoilSampleBase):
     id: int

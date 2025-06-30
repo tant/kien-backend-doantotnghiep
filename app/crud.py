@@ -38,3 +38,25 @@ def get_soil_samples_by_description_last_week(db: Session, description: str):
         .filter(models.SoilSample.timestamp >= one_week_ago)\
         .order_by(models.SoilSample.timestamp.asc())\
         .all()
+
+def create_air_sample_with_timestamp(db: Session, sample: schemas.AirSampleCreateWithTimestamp):
+    """
+    Tạo mẫu dữ liệu không khí với timestamp được chỉ định.
+    Hữu ích cho việc tạo dữ liệu test hoặc nhập dữ liệu lịch sử.
+    """
+    db_sample = models.AirSample(**sample.dict())
+    db.add(db_sample)
+    db.commit()
+    db.refresh(db_sample)
+    return db_sample
+
+def create_soil_sample_with_timestamp(db: Session, sample: schemas.SoilSampleCreateWithTimestamp):
+    """
+    Tạo mẫu dữ liệu độ ẩm đất với timestamp được chỉ định.
+    Hữu ích cho việc tạo dữ liệu test hoặc nhập dữ liệu lịch sử.
+    """
+    db_sample = models.SoilSample(**sample.dict())
+    db.add(db_sample)
+    db.commit()
+    db.refresh(db_sample)
+    return db_sample

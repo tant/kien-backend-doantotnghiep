@@ -28,3 +28,20 @@ def read_air_samples_weekly(db: Session = Depends(get_db)):
     Dữ liệu được sắp xếp theo thời gian từ cũ đến mới.
     """
     return crud.get_air_samples_last_week(db)
+
+@router.post("/samples/with-timestamp/", response_model=schemas.AirSample)
+def create_air_sample_with_time(
+    sample: schemas.AirSampleCreateWithTimestamp,
+    db: Session = Depends(get_db)
+):
+    """
+    Tạo mẫu dữ liệu không khí với timestamp được chỉ định.
+    Body request cần có dạng:
+    {
+        "temperature": float,
+        "humidity": float,
+        "pressure": float,
+        "timestamp": "2025-06-30T10:00:00.000Z"
+    }
+    """
+    return crud.create_air_sample_with_timestamp(db, sample)

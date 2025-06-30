@@ -31,3 +31,19 @@ def read_soil_samples_weekly_by_description(
     Dữ liệu được sắp xếp theo thời gian từ cũ đến mới.
     """
     return crud.get_soil_samples_by_description_last_week(db, description)
+
+@router.post("/samples/with-timestamp/", response_model=schemas.SoilSample)
+def create_soil_sample_with_time(
+    sample: schemas.SoilSampleCreateWithTimestamp,
+    db: Session = Depends(get_db)
+):
+    """
+    Tạo mẫu dữ liệu độ ẩm đất với timestamp được chỉ định.
+    Body request cần có dạng:
+    {
+        "description": string,
+        "soil_moisture": float,
+        "timestamp": "2025-06-30T10:00:00.000Z"
+    }
+    """
+    return crud.create_soil_sample_with_timestamp(db, sample)
