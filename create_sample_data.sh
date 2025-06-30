@@ -54,7 +54,7 @@ for day in {9..0}; do
         curl -X POST "http://localhost:8000/soil/samples/with-timestamp/" \
         -H "Content-Type: application/json" \
         -d "{
-            \"description\": \"Cây cam số 1\",
+            \"description\": \"bapcai1\",
             \"soil_moisture\": $soil1,
             \"timestamp\": \"$sample_ts\"
         }"
@@ -63,7 +63,7 @@ for day in {9..0}; do
         curl -X POST "http://localhost:8000/soil/samples/with-timestamp/" \
         -H "Content-Type: application/json" \
         -d "{
-            \"description\": \"Cây cam số 2\",
+            \"description\": \"bapcai1\",
             \"soil_moisture\": $soil2,
             \"timestamp\": \"$sample_ts\"
         }"
