@@ -8,29 +8,25 @@ random_float() {
     echo "scale=1; $min + $RANDOM/32768 * $range" | bc
 }
 
-# Get current hour and round down to nearest 3-hour mark
+# Get current date and time
+current_date=$(date +%Y-%m-%d)
 current_hour=$(date +%H)
-last_3hour_mark=$((current_hour - current_hour % 3))
-
-# Get current date and time in seconds
-current_ts=$(date +%s)
-current_day_start=$(date -d "@$current_ts" +%Y-%m-%d)
-current_day_start_ts=$(date -d "$current_day_start" +%s)
+current_hour_rounded=$((current_hour - current_hour % 3))
 
 # Loop through last 10 days
 for day in {9..0}; do
-    # Get start of each day
-    day_start_ts=$(date -d "$current_day_start -$day days" +%s)
+    # Get the date for this iteration
+    this_date=$(date -d "$current_date -$day days" +%Y-%m-%d)
     
-    # For each day, create samples at fixed hours (0,3,6,9,12,15,18,21)
-    for hour in {0..21..3}; do
-        # Skip future timestamps
-        if [ $day -eq 0 ] && [ $hour -gt $last_3hour_mark ]; then
+    # Loop through fixed hours of the day
+    for hour in 0 3 6 9 12 15 18 21; do
+        # Skip future timestamps for current day
+        if [ "$this_date" = "$current_date" ] && [ $hour -gt $current_hour_rounded ]; then
             continue
         fi
         
         # Calculate timestamp
-        sample_ts=$(date -d "@$((day_start_ts + hour * 3600))" -u +"%Y-%m-%dT%H:%M:%S.000Z")
+        sample_ts=$(date -d "$this_date $hour:00:00" -u +"%Y-%m-%dT%H:%M:%S.000Z")
         
         # Generate random values
         temp=$(random_float 20 30)    # Temperature between 20-30°C
@@ -63,7 +59,7 @@ for day in {9..0}; do
         curl -X POST "http://localhost:8000/soil/samples/with-timestamp/" \
         -H "Content-Type: application/json" \
         -d "{
-            \"description\": \"bapcai1\",
+            \"description\": \"cayot1\",
             \"soil_moisture\": $soil2,
             \"timestamp\": \"$sample_ts\"
         }"
