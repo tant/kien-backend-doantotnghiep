@@ -3,3 +3,5 @@ uvicorn
 sqlalchemy
 pydantic
 paho-mqtt
+pytest
+httpx  # Cho FastAPI TestClient
